@@ -2683,7 +2683,8 @@ namespace HeatBalanceSurfaceManager {
 				} // Surface(SurfNum)%ExtSolar
 
 				if ( Surface( SurfNum ).HeatTransSurf && ConstrNum > 0 ) {
-					SurfSolIncPtr = SurfaceScheduledSolarInc( SurfNum, ConstrNum );
+					//SurfSolIncPtr = SurfaceScheduledSolarInc( SurfNum, ConstrNum );
+					SurfSolIncPtr = 0;
 					if ( SurfSolIncPtr == 0 ) {
 						if ( Construct( ConstrNum ).TransDiff <= 0.0 ) { // Opaque surface
 							QRadSWInAbs( SurfNum ) += AISurf( SurfNum ) * BeamSolarRad;
