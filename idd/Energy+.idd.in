@@ -4795,6 +4795,152 @@ Material:RoofVegetation,
       \key Advanced
       \default Advanced
 
+Material:GreenRoofWithPlantCoverage,
+  \memo GreenRoof model which includes the plant coverage
+  \memo Implemented by
+  \memo ()
+  \memo This GreenRoof simulation model was developed by Tabares-Velasco and Srebric, then later
+  \memo implemented in FORTRAN and validated by Yaghoobian and Srebric. Its implementation is similar to 
+  \memo the EcoRoof Module, but includes 4 new parameters for plant coverage, volumetric water content
+  \memo at field capacity, and long- and shortwave extinction coefficients.
+  \min-fields 19
+  A1 ,\field Name
+      \required-field
+      \type alpha
+      \reference MaterialName
+  N1 ,\field Height of Plants
+      \type real
+      \note The ecoroof module is designed for short plants and shrubs.
+      \minimum> 0.005
+      \maximum  1.0
+      \units m
+      \default .2
+  N2 ,\field Leaf Area Index
+      \units dimensionless
+      \note Entire surface is assumed covered, so decrease LAI accordingly.
+      \minimum> 0.001
+      \maximum 5.0
+      \default 1.0
+      \type real
+  N3 ,\field Leaf Reflectivity
+      \type real
+      \units dimensionless
+      \note Leaf reflectivity (albedo) is typically 0.18-0.25
+      \maximum 0.5
+      \minimum 0.05
+      \default 0.22
+  N4 ,\field Leaf Emissivity
+      \type real
+      \minimum 0.8
+      \maximum 1.0
+      \units dimensionless
+      \default 0.95
+  N5 ,\field Minimum Stomatal Resistance
+      \units s/m
+      \default 180.0
+      \note This depends upon plant type
+      \minimum 50.0
+      \maximum 300.
+      \type real
+  A2 ,\field Soil Layer Name
+      \type alpha
+      \default Green Roof Soil
+  A3 ,\field Roughness
+      \type choice
+      \key VeryRough
+      \key MediumRough
+      \key Rough
+      \key Smooth
+      \key MediumSmooth
+      \key VerySmooth
+      \default MediumRough
+  N6 ,\field Thickness
+      \note thickness of the soil layer of the EcoRoof
+      \units m
+      \type real
+      \note Soil depths of 0.15m (6in) and 0.30m (12in) are common.
+      \default 0.1
+      \minimum> 0.05
+      \maximum 0.7
+      \ip-units in
+  N7 ,\field Conductivity of Dry Soil
+      \units W/m-K
+      \type real
+      \note Thermal conductivity of dry soil.
+      \note Typical ecoroof soils range from 0.3 to 0.5
+      \default 0.35
+      \minimum  0.2
+      \maximum 1.5
+  N8 ,\field Density of Dry Soil
+      \units kg/m3
+      \note Density of dry soil (the code modifies this as the soil becomes moist)
+      \note Typical ecoroof soils range from 400 to 1000 (dry to wet)
+      \type real
+      \minimum 300
+      \maximum 2000
+      \default 1100
+  N9 ,\field Specific Heat of Dry Soil
+      \units J/kg-K
+      \type real
+      \note Specific heat of dry soil
+      \minimum> 500
+      \maximum 2000
+      \default 1200
+  N10,\field Thermal Absorptance
+      \type real
+      \note Soil emissivity is typically in range of 0.90 to 0.98
+      \minimum> 0.8
+      \default .9
+      \maximum 1.0
+  N11,\field Solar Absorptance
+      \type real
+      \note Solar absorptance of dry soil (1-albedo) is typically 0.60 to 0.85
+      \note corresponding to a dry albedo of 0.15 to 0.40
+      \default .70
+      \minimum 0.40
+      \maximum 0.9
+  N12,\field Visible Absorptance
+      \type real
+      \minimum> 0.5
+      \default .75
+      \maximum 1.0
+  N13,\field Saturation Volumetric Moisture Content of the Soil Layer
+      \type real
+      \note Maximum moisture content is typically less than 0.5
+      \minimum> 0.1
+      \maximum 0.5
+      \default 0.3
+  N14,\field Residual Volumetric Moisture Content of the Soil Layer
+      \type real
+      \minimum  0.01
+      \maximum  0.1
+      \default 0.01
+  N15,\field Initial Volumetric Moisture Content of the Soil Layer
+      \type real
+      \minimum> 0.05
+      \maximum  0.5
+      \default 0.1
+  N16,\field Plant Coverage
+      \type real
+      \minimum 0.0
+      \maximum  1
+      \default 0.5
+  N17,\field Volumentric Water Content at Field Capacity
+      \type real
+      \default 0.33
+  N18,\field Longwave Extinction Coefficient
+      \type real
+      \default 0.83
+  N19,\field Shortwave Extinction Coefficient
+      \type real
+      \default 0.7
+  A4; \field Moisture Diffusion Calculation Method
+      \note Advanced calculation requires increased number of timesteps (recommended >20).
+      \type choice
+      \key Simple
+      \key Advanced
+      \default Simple
+
 WindowMaterial:SimpleGlazingSystem,
        \min-fields 3
        \memo Alternate method of describing windows
