@@ -294,6 +294,9 @@ namespace DataHeatBalance {
 	extern Real64 const HighDiffusivityThreshold; // used to check if Material properties are out of line.
 	extern Real64 const ThinMaterialLayerThreshold; // 3 mm lower limit to expected material layers
 
+	// Parameter to choose between EcoRoof and GreenRoof_with_PlantCoverage (Neda Yaghoobian)
+	bool const GreenRoofModel_PC;	// False means EcoRoof model Instead
+
 	// DERIVED TYPE DEFINITIONS:
 
 	// thermochromic windows
@@ -721,6 +724,13 @@ namespace DataHeatBalance {
 		Real64 InitMoisture; // Initial soil moisture DJS
 		Real64 MinMoisture; // Minimum moisture allowed DJS
 		Real64 RStomata; // Minimum stomatal resistance DJS
+
+		//***--- PlantCoverage, VWC_FieldCapacity, SW_ExtCoeff, and LW_ExtCoeff are added for
+		//***--- the 'GreenRoof_with_PlantCoverage' model(Neda Yaghoobian 2014)
+		Real64 PlantCoverage; // Plant coverage
+		Real64 VWC_FieldCapacity; // VWC at field capacity
+		Real64 SW_ExtCoeff; // SW extinction coefficient
+		Real64 LW_ExtCoeff; // LW extinction coefficient
 		// HAMT
 		int niso; // Number of data points
 		Array1D< Real64 > isodata; // isotherm values
@@ -797,10 +807,7 @@ namespace DataHeatBalance {
 		int GlassSpecAngTransDataPtr; // Data set index of transmittance as a function of spectral and angle associated with a window glass material
 		int GlassSpecAngFRefleDataPtr; // Data set index of front reflectance as a function of spectral and angle associated with a window glass material
 		int GlassSpecAngBRefleDataPtr; // Data set index of back reflectance as a function of spectral and angle associated with a window glass material
-		Real64 PlantCoverage; // Plant coverage percentage
-		Real64 VWC_FieldCapacity; // Substrate volumetric water content at field capacity
-		Real64 SW_ExtCoeff; // Shortwave extinction coefficient
-		Real64 LW_ExtCoeff; // Longwave extinction coefficient
+		bool GreenRoofModel_PC;
 
 
 		// Default Constructor

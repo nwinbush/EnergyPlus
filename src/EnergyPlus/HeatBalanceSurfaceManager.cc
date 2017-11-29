@@ -4633,6 +4633,7 @@ CalcHeatBalanceOutsideSurf( Optional_int_const ZoneToResimulate ) // if passed i
 	using ScheduleManager::GetScheduleIndex;
 	using namespace Psychrometrics;
 	using EcoRoofManager::CalcEcoRoof;
+	using EcoRoofManager::GreenRoof_with_PlantCoverage; // 'GreenRoof_with_PlantCoverage' added. (Neda Yaghoobian 2014)
 
 	// Locals
 	// SUBROUTINE ARGUMENT DEFINITIONS:
@@ -4948,7 +4949,12 @@ CalcHeatBalanceOutsideSurf( Optional_int_const ZoneToResimulate ) // if passed i
 			// recompute each load by calling ecoroof
 
 			if ( Surface( SurfNum ).ExtEcoRoof ) {
-				CalcEcoRoof( SurfNum, ZoneNum, ConstrNum, TempExt );
+				if (GreenRoofModel_PC) {
+					GreenRoof_with_PlantCoverage(SurfNum, ZoneNum, ConstrNum, TempExt);
+				}else{
+					CalcEcoRoof(SurfNum, ZoneNum, ConstrNum, TempExt);
+				}
+				
 				continue;
 			}
 

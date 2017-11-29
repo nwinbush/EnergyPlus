@@ -4795,7 +4795,7 @@ Material:RoofVegetation,
       \key Advanced
       \default Advanced
 
-Material:GreenRoofWithPlantCoverage,
+Material:GreenRoof_With_PlantCoverage,
   \memo GreenRoof model which includes the plant coverage
   \memo Implemented by
   \memo ()
@@ -4928,12 +4928,12 @@ Material:GreenRoofWithPlantCoverage,
   N17,\field Volumentric Water Content at Field Capacity
       \type real
       \default 0.33
-  N18,\field Longwave Extinction Coefficient
-      \type real
-      \default 0.83
-  N19,\field Shortwave Extinction Coefficient
+  N18,\field Shortwave Extinction Coefficient
       \type real
       \default 0.7
+  N19,\field Longwave Extinction Coefficient
+      \type real
+      \default 0.83
   A4; \field Moisture Diffusion Calculation Method
       \note Advanced calculation requires increased number of timesteps (recommended >20).
       \type choice
