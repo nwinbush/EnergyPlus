@@ -4795,7 +4795,7 @@ Material:RoofVegetation,
       \key Advanced
       \default Advanced
 
-Material:GreenRoof_With_PlantCoverage,
+Material:GreenRoof_with_PlantCoverage,
   \memo GreenRoof model which includes the plant coverage
   \memo Implemented by
   \memo ()

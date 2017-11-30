@@ -314,7 +314,7 @@ namespace DataHeatBalance {
 	Real64 const ThinMaterialLayerThreshold( 0.003 ); // 3 mm lower limit to expected material layers
 
 	// Parameter to choose between EcoRoof and GreenRoof_with_PlantCoverage (Neda Yaghoobian)
-	bool const GreenRoofModel_PC(false);	// False means EcoRoof model Instead
+	bool GreenRoofModel_PC(false);	// False means EcoRoof model Instead
 
 	// DERIVED TYPE DEFINITIONS:
 
