@@ -294,6 +294,9 @@ namespace DataHeatBalance {
 	extern Real64 const HighDiffusivityThreshold; // used to check if Material properties are out of line.
 	extern Real64 const ThinMaterialLayerThreshold; // 3 mm lower limit to expected material layers
 
+	// Parameter to choose between EcoRoof and GreenRoof_with_PlantCoverage(Neda Yaghoobian 2014)
+	bool GreenRoofModel_PC;    // FALSE means use EcoRoof model Instead
+
 	// DERIVED TYPE DEFINITIONS:
 
 	// thermochromic windows
@@ -721,6 +724,13 @@ namespace DataHeatBalance {
 		Real64 InitMoisture; // Initial soil moisture DJS
 		Real64 MinMoisture; // Minimum moisture allowed DJS
 		Real64 RStomata; // Minimum stomatal resistance DJS
+
+		// ***-- - PlantCoverage, VWC_FieldCapacity, SW_ExtCoeff, and LW_ExtCoeff are added for
+		// ***-- - the 'GreenRoof_with_PlantCoverage' model(Neda Yaghoobian 2014)
+		Real64 PlantCoverage;      // Plant coverage
+		Real64 VWC_FieldCapacity; // VWC at field capacity
+		Real64 SW_ExtCoeff;   // SW extinction coefficient
+		Real64 LW_ExtCoeff;   // LW extinction coefficient
 		// HAMT
 		int niso; // Number of data points
 		Array1D< Real64 > isodata; // isotherm values
@@ -956,7 +966,11 @@ namespace DataHeatBalance {
 			GlassSpectralAndAngle( false ),
 			GlassSpecAngTransDataPtr( 0 ),
 			GlassSpecAngFRefleDataPtr( 0 ),
-			GlassSpecAngBRefleDataPtr( 0 )
+			GlassSpecAngBRefleDataPtr( 0 ),
+			PlantCoverage(0.0),       
+			VWC_FieldCapacity(0.0),   
+			SW_ExtCoeff(0.0), 
+			LW_ExtCoeff(0.0)
 		{}
 
 	};
