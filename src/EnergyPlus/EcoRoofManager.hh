@@ -88,6 +88,61 @@ namespace EcoRoofManager {
 	);
 
 	void
+	GreenRoof_with_PlantCoverage(
+		int const SurfNum, // Indicator of Surface Number for the current surface
+		int const ZoneNum, // Indicator for zone number where the current surface
+		int & ConstrNum, // Indicator for contruction index for the current surface
+		Real64 & TempExt // Exterior temperature boundary condidtion
+	);
+
+	// Convective heat transfer coefficient for plants
+	Real64
+	h_conv(
+		int const SurfNum,
+		Real64 const Tair_k,
+		Real64 const plant_temp,
+		Real64 const WindSpeed,
+		Real64 const k_air1
+	);
+
+	// Convective heat transfer coefficient for bare soil
+	Real64
+	h_conv_bare(
+		int const SurfNum,
+		Real64 const Tair_k,
+		Real64 const BareSoil_temp,
+		Real64 const WindSpeed,
+		Real64 const k_air1
+	);
+
+	// Saturation vapor pressure (kPa)
+	Real64
+	e_s(
+		Real64 const Temperature
+	);
+
+	// f_VPD
+	Real64
+	f_Hum(
+		Real64 const Temperature,
+		Real64 const eair
+	);
+
+	// f_temp
+	Real64
+	f_temp(
+		Real64 const Temperature
+	);
+
+	// Gamma: Psychrometric constant
+	Real64
+	gamma_s(
+		Real64 const Temperature,
+		Real64 const Cp_air,
+		Real64 const Pa
+	);
+
+	void
 	UpdateSoilProps(
 		Real64 & Moisture,
 		Real64 & MeanRootMoisture,
