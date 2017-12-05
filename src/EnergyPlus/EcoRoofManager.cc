@@ -646,12 +646,12 @@ namespace EcoRoofManager {
 	}
 
 	void
-	GreenRoof_with_PlantCoverage(
-		int const SurfNum, // Indicator of Surface Number for the current surface
-		int const ZoneNum, // Indicator for zone number where the current surface
-		int & ConstrNum, // Indicator for contruction index for the current surface
-		Real64 & TempExt // Exterior temperature boundary condidtion
-	) {
+		GreenRoof_with_PlantCoverage(
+			int const SurfNum, // Indicator of Surface Number for the current surface
+			int const ZoneNum, // Indicator for zone number where the current surface
+			int & ConstrNum, // Indicator for contruction index for the current surface
+			Real64 & TempExt // Exterior temperature boundary condidtion
+		) {
 
 		// SUBROUTINE INFORMATION
 		// AUTHOR          Neda Yaghoobian, University of Maryland, College Park
@@ -726,7 +726,7 @@ namespace EcoRoofManager {
 		Real64 static Q_IR_bare_s_Rep;
 		Real64 static Q_IR_s_avg_Rep;
 		Real64 static Qcond_avg_Rep;
-			// ***-------- -
+		// ***-------- -
 		Real64 i_fg;     // Latent heat of vaporization(j / kg)
 		Real64 Pa;                    // Standard atmospheric pressure(Pa)
 			// Real64 h_conv                // Convective heat transfer coeff
@@ -762,7 +762,7 @@ namespace EcoRoofManager {
 		Real64 tau_lw;
 		Real64 EpsilonOne;
 		Real64 RH;
-			// Real64 VFluxf
+		// Real64 VFluxf
 		Real64 static Vfluxf = 0.0;    // Water evapotr.rate associated with latent heat from vegetation[m / s]
 			// Real64 VFluxg
 		Real64 static Vfluxg = 0.0;  // Water evapotr.rate associated with latent heat from ground surface[m / s]
@@ -777,7 +777,7 @@ namespace EcoRoofManager {
 		Real64 F1temp;
 		Real64 Qsoilpart1;
 		Real64 Qsoilpart2;
-			// Real64 f_Hum
+		// Real64 f_Hum
 		Real64 Tp_new;
 		Real64 Tp_old;
 		Real64 Q_IR_sky_p;
@@ -868,11 +868,11 @@ namespace EcoRoofManager {
 			MeanRootMoisture = Moisture; // DJS Oct 2007 Release--> all soil at same initial moisture for Reverse DD fix
 			SoilThickness = Material(Construct(ConstrNum).LayerPoint(1)).Thickness; // Total thickness of soil layer(m)
 
-			sigma_f = Material(Construct(ConstrNum).LayerPoint(1)).PlantCoverage;
+			/*sigma_f = Material(Construct(ConstrNum).LayerPoint(1)).PlantCoverage;
 			VWC_fc = Material(Construct(ConstrNum).LayerPoint(1)).VWC_FieldCapacity;
 			VWC_wp = MoistureResidual;
 			Ksw = Material(Construct(ConstrNum).LayerPoint(1)).SW_ExtCoeff;
-			Klw = Material(Construct(ConstrNum).LayerPoint(1)).LW_ExtCoeff;
+			Klw = Material(Construct(ConstrNum).LayerPoint(1)).LW_ExtCoeff;*/
 
 
 			FirstEcoSurf = SurfNum;          // this determines WHEN to updatesoilProps
@@ -917,10 +917,10 @@ namespace EcoRoofManager {
 			MeanRootMoisture = Moisture;  // Start the root zone moisture at the same value as the surface.
 			Alphag = 1.0 - Material(Construct(ConstrNum).LayerPoint(1)).AbsorpSolar; // albedo rather than absorptivity
 		}
-			// DJS July 2007
+		// DJS July 2007
 
 
-		if(BeginEnvrnFlag && MyEnvrnFlag) {
+		if (BeginEnvrnFlag && MyEnvrnFlag) {
 			T_soil = OutDryBulbTempAt(Surface(SurfNum).Centroid.z) + KelvinConv;       // OutDrybulbTemp           // initial guess
 			T_plant = OutDryBulbTempAt(Surface(SurfNum).Centroid.z) + KelvinConv;     // OutDrybulbTemp           // initial guess
 			T_bare_soil = OutDryBulbTempAt(Surface(SurfNum).Centroid.z) + KelvinConv;  // OutDrybulbTemp           // initial guess
@@ -950,7 +950,7 @@ namespace EcoRoofManager {
 
 		// -- - Relative humidity = Current outdoor relative humidity[%]
 		RH = OutRelHum; // Get humidity in % from the DataEnvironment.f90
-		
+
 
 		// From EcoRoof : If current surface is = FirstEcoSurf then for this time step we need to update the soil moisture
 		// ----'FirstEcoSurf' gets its value when 'EcoRoofbeginFlag' is TRUE(first entry into ecoroof routines)
@@ -987,7 +987,8 @@ namespace EcoRoofManager {
 			// -- - f_VWC
 			if (Moisture > 0.7*VWC_fc) {
 				f_VWC = 1;
-			}else {
+			}
+			else {
 				f_VWC = max(0.0, 1 / ((Moisture - VWC_wp) / (0.7*VWC_fc - VWC_wp)));
 			}
 			if (Moisture < VWC_wp) {
@@ -1138,7 +1139,8 @@ namespace EcoRoofManager {
 
 					if (Q_E_s == 0.0) {
 						Q_E_S_prim = 0.0;
-					} else {
+					}
+					else {
 						Q_E_S_prim = ((Rhoa*Cp_air / (r_s_sub + r_a_sub))*0.6108*0.622*pow(1000.0, 2) * exp(-(17.27*(KelvinConv - Ts_old))
 							/ (Ts_old - KelvinConv + 237.3))*(17.27 / (Ts_old - KelvinConv + 237.3) + (17.27*(KelvinConv -
 								Ts_old)) / pow((Ts_old - KelvinConv + 237.3), 2))*(2501.1 - (-2.3793)*(KelvinConv - Ts_old))) /
@@ -1187,14 +1189,16 @@ namespace EcoRoofManager {
 									Ts_new = 0.5*(MidPoint + Sol_1);
 									Func_2 = Func_MidPoint;
 									Sol_2 = MidPoint;
-								} else if (((Func_MidPoint < 0.0) && (Func_2 > 0.0)) || ((Func_MidPoint > 0.0) && (Func_2 < 0.0))) {
+								}
+								else if (((Func_MidPoint < 0.0) && (Func_2 > 0.0)) || ((Func_MidPoint > 0.0) && (Func_2 < 0.0))) {
 									Ts_new = 0.5*(MidPoint + Sol_2);
 									Func_1 = Func_MidPoint;
 									Sol_1 = MidPoint;
 								}
 							}
 							goto label_2200;
-						} else {
+						}
+						else {
 							goto label_2200;
 						}
 					}
@@ -1209,15 +1213,15 @@ namespace EcoRoofManager {
 					(1 - epsilong)*Surface(SurfNum).ViewFactorSky*pow((SkyTempKelvin), 4)) +
 					(1 - tau_lw)*Sigma*epsilonp*epsilong*(pow(T_plant, 4) - pow(T_soil, 4)) / EpsilonOne;
 			}
-		
+
 			// ################################################################
 				// -- - Newton's method for solving T_bare_soil
-				if(sigma_f != 1) {
-					Ts_bare_new = T_bare_soil;
-					Ts_bare_old = Ts_bare_new + 999;
+			if (sigma_f != 1) {
+				Ts_bare_new = T_bare_soil;
+				Ts_bare_old = Ts_bare_new + 999;
 
-					iter3 = 0;
-				while(abs(Ts_bare_new - Ts_bare_old) > 0.0001){
+				iter3 = 0;
+				while (abs(Ts_bare_new - Ts_bare_old) > 0.0001) {
 					iter3 = iter3 + 1;
 
 					Ts_bare_old = Ts_bare_new;
@@ -1250,46 +1254,47 @@ namespace EcoRoofManager {
 					Solution3[iter3] = Ts_bare_old;
 					Func3[iter3] = Func_bare_s;
 					MidPoint = 0.5*(Solution3[iter3] + Solution3[iter3 - 1]);
-				if(iter3 >= 100) {   // Means if Newton's Method entered an infinite loop use Bisection method instead
-				if(((Func3[iter3] < 0.0) && (Func3[iter3 - 1] > 0.0)) || ((Func3[iter3] > 0.0) && (Func3[iter3 - 1] < 0.0))) {
-				// Bisection Method :
-					iter_Mid = 0;
-				while(abs(Ts_bare_new - MidPoint) > 0.0001){
-					iter_Mid = iter_Mid + 1;
+					if (iter3 >= 100) {   // Means if Newton's Method entered an infinite loop use Bisection method instead
+						if (((Func3[iter3] < 0.0) && (Func3[iter3 - 1] > 0.0)) || ((Func3[iter3] > 0.0) && (Func3[iter3 - 1] < 0.0))) {
+							// Bisection Method :
+							iter_Mid = 0;
+							while (abs(Ts_bare_new - MidPoint) > 0.0001) {
+								iter_Mid = iter_Mid + 1;
 
-				if(iter_Mid == 1) {
-					Func_1 = Func3[iter3];
-					Func_2 = Func3[iter3 - 1];
-					Sol_1 = Solution3[iter3];
-					Sol_2 = Solution3[iter3 - 1];
-				}
-				if (iter_Mid > 1) MidPoint = Ts_bare_new;
+								if (iter_Mid == 1) {
+									Func_1 = Func3[iter3];
+									Func_2 = Func3[iter3 - 1];
+									Sol_1 = Solution3[iter3];
+									Sol_2 = Solution3[iter3 - 1];
+								}
+								if (iter_Mid > 1) MidPoint = Ts_bare_new;
 
 
-				// Assuming that the sky emissivity is equal to the bare soil emissivity
-				Q_IR_sky_bare_s = epsilong*Sigma*(Surface(SurfNum).ViewFactorSky*pow((SkyTempKelvin), 4) - pow(MidPoint, 4) -
-					(1 - epsilong)*Surface(SurfNum).ViewFactorSky*pow((SkyTempKelvin), 4));
-				Qconv_bare_s = h_conv_bare(SurfNum, Tak, MidPoint, WS, k_air)*(MidPoint - Tak);
-				r_a_bare = Rhoa*Cp_air*pow((Le_num), (2 / 3)) / h_conv_bare(SurfNum, Tak, MidPoint, WS, k_air);
-				Q_E_bare_s = Rhoa*Cp_air / gamma_s(MidPoint, Cp_air, Pa)*(e_s(MidPoint) - eair) / (r_s_sub + r_a_bare);
-				Qcond_bare_s = -Qsoilpart1 + Qsoilpart2*(sigma_f*(T_soil - KelvinConv) + (1 - sigma_f)*(MidPoint - KelvinConv));
-				Func_MidPoint = Q_sol_abs_bare_soil + Q_IR_sky_bare_s - Qconv_bare_s - Q_E_bare_s - Qcond_bare_s;
-				if(((Func_MidPoint < 0.0) && (Func_1 > 0.0)) || ((Func_MidPoint > 0.0) && (Func_1 < 0.0))) {
-					Ts_bare_new = 0.5*(MidPoint + Sol_1);
-					Func_2 = Func_MidPoint;
-					Sol_2 = MidPoint;
-				} else if(((Func_MidPoint < 0.0) && (Func_2 > 0.0)) || ((Func_MidPoint > 0.0) && (Func_2 < 0.0))) {
-					Ts_bare_new = 0.5*(MidPoint + Sol_2);
-					Func_1 = Func_MidPoint;
-					Sol_1 = MidPoint;
-				}
-				}
-				goto label _3300;
-				}
-				else{
-					goto label_3300;
-				}
-				}
+								// Assuming that the sky emissivity is equal to the bare soil emissivity
+								Q_IR_sky_bare_s = epsilong*Sigma*(Surface(SurfNum).ViewFactorSky*pow((SkyTempKelvin), 4) - pow(MidPoint, 4) -
+									(1 - epsilong)*Surface(SurfNum).ViewFactorSky*pow((SkyTempKelvin), 4));
+								Qconv_bare_s = h_conv_bare(SurfNum, Tak, MidPoint, WS, k_air)*(MidPoint - Tak);
+								r_a_bare = Rhoa*Cp_air*pow((Le_num), (2 / 3)) / h_conv_bare(SurfNum, Tak, MidPoint, WS, k_air);
+								Q_E_bare_s = Rhoa*Cp_air / gamma_s(MidPoint, Cp_air, Pa)*(e_s(MidPoint) - eair) / (r_s_sub + r_a_bare);
+								Qcond_bare_s = -Qsoilpart1 + Qsoilpart2*(sigma_f*(T_soil - KelvinConv) + (1 - sigma_f)*(MidPoint - KelvinConv));
+								Func_MidPoint = Q_sol_abs_bare_soil + Q_IR_sky_bare_s - Qconv_bare_s - Q_E_bare_s - Qcond_bare_s;
+								if (((Func_MidPoint < 0.0) && (Func_1 > 0.0)) || ((Func_MidPoint > 0.0) && (Func_1 < 0.0))) {
+									Ts_bare_new = 0.5*(MidPoint + Sol_1);
+									Func_2 = Func_MidPoint;
+									Sol_2 = MidPoint;
+								}
+								else if (((Func_MidPoint < 0.0) && (Func_2 > 0.0)) || ((Func_MidPoint > 0.0) && (Func_2 < 0.0))) {
+									Ts_bare_new = 0.5*(MidPoint + Sol_2);
+									Func_1 = Func_MidPoint;
+									Sol_1 = MidPoint;
+								}
+							}
+							goto label_3300;
+						}
+						else {
+							goto label_3300;
+						}
+					}
 				}
 
 			label_3300:
@@ -1301,7 +1306,250 @@ namespace EcoRoofManager {
 				Q_sol_bare_s_Rep = (1 - Alphag)*RS;
 				Q_IR_bare_s_Rep = epsilong*Sigma*(Surface(SurfNum).ViewFactorSky*pow((SkyTempKelvin), 4) - pow(T_bare_soil, 4) -
 					(1 - epsilong)*Surface(SurfNum).ViewFactorSky*pow((SkyTempKelvin), 4));
-				}
+			}
+
+			// ################################################################################################################################################
+				// -- - Average soil temperature
+			Tsoil_avg = sigma_f*T_soil + (1 - sigma_f)*T_bare_soil;
+
+
+			// -- - From EcoRoof
+			// Note: 'Q_ET_p' & 'i_fg_p' are used in places of 'Lf' & 'Lef' and are coming from equations of GreenRoof(Not EcoRoof)
+			// It is the same for the soil parameters.
+			// Note : Since 'Q_ET_p' and 'Q_E_s' have reverse signs than those in the EcoRoof model, '-1.0*' is omitted from the Vfluxf / g
+			// equations of EcoRoof.
+
+			i_fg_p = (-2.3793*(T_plant - KelvinConv) + 2501.1) * 1000;  // [j / kg]
+				// Check to see if ice is sublimating or frost is forming.
+			if ((T_plant - KelvinConv) < 0.0) i_fg_p = 2.838e6;  // per FASST documentation p.15 after eqn. 37.
+
+			i_fg_g = (-2.3793*(Tsoil_avg - KelvinConv) + 2501.1) * 1000;  // [j / kg]
+					// Check to see if ice is sublimating or frost is forming.
+			if ((Tsoil_avg - KelvinConv) < 0.0) i_fg_g = 2.838e6;  // per FASST documentation p.15 after eqn. 37.
+
+			if (sigma_f == 0.0) {
+				Vfluxf = 0.0;
+			}
+			else {
+				Vfluxf = Q_ET_p / i_fg_p / 990.0;               // water evapotranspire rate[m / s]
+			}
+			Q_E_avg = sigma_f*Q_E_s + (1 - sigma_f)*Q_E_bare_s;
+			Vfluxg = Q_E_avg / i_fg_g / 990.0;               // water evapotranspire rate[m / s]
+			if (Vfluxf < 0.0) Vfluxf = 0.0;      // According to FASST Veg.Models p. 11, eqn 26 - 27, if Qfsat > qaf the actual
+			if (Vfluxg < 0.0) Vfluxg = 0.0;      // evaporative fluxes should be set to zero(delta_c = 1 or 0).
+
+			// ###############################################
+
+			TempExt = Tsoil_avg - KelvinConv;
+			TH(SurfNum, 1, 1) = Tsoil_avg - KelvinConv;
+
+			Tsoil_avg_Rep = Tsoil_avg - KelvinConv;
+			Qconv_s_avg_Rep = sigma_f*Qconv_s_Rep + (1 - sigma_f)*Qconv_bare_s_Rep;
+			Q_E_avg_Rep = sigma_f*Q_E_s_Rep + (1 - sigma_f)*Q_E_bare_s_Rep;
+			Q_sol_s_avg_Rep = sigma_f*Q_sol_soil_Rep + (1 - sigma_f)*Q_sol_bare_s_Rep;
+			Q_IR_s_avg_Rep = sigma_f*Q_IR_s_Rep + (1 - sigma_f)*Q_IR_bare_s_Rep;
+			Qcond_avg_Rep = -Qsoilpart1 + Qsoilpart2*(sigma_f*(T_soil - KelvinConv) + (1 - sigma_f)*(T_bare_soil - KelvinConv));
+
+			if (sigma_f != 0.0) {
+				T_plant_Rep = T_plant - KelvinConv;
+				Qconv_p_Rep = Qconv_p_Rep;
+				Q_ET_p_Rep = Q_ET_p_Rep;
+			}
+			else {
+				T_plant_Rep = 0.0;
+				Qconv_p_Rep = 0.0;
+				Q_ET_p_Rep = 0.0;
+			}
+
+		}
+	}
+
+	// --------------------All Functions(Begining)-------------------------- -
+		// -- - Convective heat transfer coefficient for plants
+	Real64
+		h_conv(
+			int const SurfNum,
+			Real64 const Tair_k,
+			Real64 const plant_temp,
+			Real64 const WindSpeed,
+			Real64 const k_air1
+		)
+	{
+		Real64 const nu_air = 15.66e-6;     // kinematic viscosity(m**2 / s) for air at 300 K(Mills 1999 Heat Transfer)
+		Real64 const Pr_air = 0.71;       // Prandtl number for air
+		Real64 Re;     // Reynolds number
+		Real64 Gr;        // Grashof number
+		Real64 Pr;        // Prandtl number
+		Real64 Tavg;       // Average air temperature within the plant canopy
+		Real64 Beta;      // Volumetric thermal expansion coefficient(assuming ideal gas)
+		Real64 L_cha;      // Characteristic length based on the green roof dimensions
+		Real64 Nu;     // Nusselt number
+		Real64 length;
+		Real64 wide;
+		Real64 Norm;
+		Real64 Lmixed;
+		Real64 static h_conv_coeff;
+
+		length = sqrt(Surface(SurfNum).Area);
+		wide = length;
+		Tavg = 0.5*(Tair_k + plant_temp);
+		Beta = 1.0 / Tavg;
+		L_cha = length*wide / (2 * length + 2 * wide);
+
+		Gr = abs(9.81*Beta*(plant_temp - Tair_k)*pow(L_cha, 3) / pow(nu_air, 2));
+		Re = WindSpeed*length / nu_air;
+
+		// Forced convection
+		if (Gr < 0.068*pow(Re, 2.2)) {
+			Nu = 3.0 + 1.25*0.0253*pow(Re, 0.8);
+			h_conv_coeff = 3.0*Nu*k_air1 / length;
+		}
+
+		// Mixed convection
+		if (Gr > 0.068*pow(Re, 2.2) && Gr < 55.3*pow(Re, (5 / 3))) {
+			Nu = 2.7*pow((Gr / pow(Re, 2.2)), (1 / 3))*(3 * 15 / 4 + 0.0253 * 15 / 16 * pow(Re, 0.8));
+			Norm = (Gr / pow(Re, (5 / 3))) / 60;
+			Lmixed = (L_cha*Norm + length*(1 - Norm));
+			h_conv_coeff = 3 * Nu*k_air1 / Lmixed;
+		}
+
+		// Natural convection
+		if (Gr > 55.3*pow(Re, (5 / 3))) {
+			Nu = 0.15*pow((Gr*Pr_air), (1 / 3));
+			h_conv_coeff = 3 * Nu*k_air1 / L_cha;
+		}
+
+		return h_conv_coeff;
+	}
+
+	// -- - Convective heat transfer coefficient for bare soil
+	// Convective heat transfer coefficient for bare soil
+	Real64
+	h_conv_bare(
+		int const SurfNum,
+		Real64 const Tair_k,
+		Real64 const BareSoil_temp,
+		Real64 const WindSpeed,
+		Real64 const k_air1
+	)
+	{
+		Real64 const nu_air = 15.66e-6;     // kinematic viscosity(m**2 / s) for air at 300 K(Mills 1999 Heat Transfer)
+		Real64 const Pr_air = 0.71;    // Prandtl number for air
+		Real64 Re;     // Reynolds number
+		Real64 Gr_soil;    // Grashof number
+		Real64 Pr;   // Prandtl number
+		Real64 Tavg;       // Average air temperature within the plant canopy
+		Real64 Beta;      // Volumetric thermal expansion coefficient(assuming ideal gas)
+		Real64 L_cha;      // Characteristic length based on the green roof dimensions
+		Real64 Nu;     // Nusselt number
+		Real64 length;
+		Real64 wide;
+		Real64 Norm;
+		Real64 Lmixed;
+		Real64 static h_conv_bare_coeff;
+
+		length = sqrt(Surface(SurfNum).Area);
+		wide = length;
+		Tavg = 0.5*(Tair_k + BareSoil_temp);
+		Beta = 1.0 / Tavg;
+		L_cha = length*wide / (2 * length + 2 * wide);
+
+		Gr_soil = abs(9.81*Beta*(BareSoil_temp - Tair_k)*pow(L_cha, 3) / pow(nu_air, 2));
+		Re = WindSpeed*length / nu_air;
+
+		// Forced convection
+		if (Gr_soil < 0.068*pow(Re, 2.2)) {
+			Nu = 3.0 + 1.25*0.0253*pow(Re, 0.8);
+			h_conv_bare_coeff = 2.1*Nu*k_air1 / length;
+		}
+
+		// Mixed convection
+		if (Gr_soil > 0.068*pow(Re, 2.2) && Gr_soil < 55.3*pow(Re, (5 / 3))) {
+			Nu = 2.7*pow((Gr_soil / pow(Re, 2.2)), (1 / 3))*(3 * 15 / 4 + 0.0253 * 15 / 16 * pow(Re, 0.8));
+			Norm = (Gr_soil / pow(Re, (5 / 3))) / 60;
+			Lmixed = (L_cha*Norm + length*(1 - Norm));
+			h_conv_bare_coeff = 2.1*Nu*k_air1 / Lmixed;
+		}
+
+		// Natural convection
+		if (Gr_soil > 55.3*pow(Re, (5 / 3))) {
+			Nu = 0.15*pow((Gr_soil*Pr_air), (1 / 3));
+			h_conv_bare_coeff = 2.1*Nu*k_air1 / L_cha;
+		}
+
+		return h_conv_bare_coeff;
+	}
+
+	// Saturation vapor pressure (kPa)
+	Real64
+	e_s(
+		Real64 const Temperature
+	)
+	{
+		Real64 e_sVar;
+
+		e_sVar = 0.6108 * exp((17.27 * (Temperature - KelvinConv)) / ((Temperature - KelvinConv) + 237.3));
+
+		return e_sVar;
+	}
+
+	// f_VPD
+	Real64
+		f_Hum(
+			Real64 const Temperature,
+			Real64 const eair
+		)
+	{
+		Real64 VPD_plants;
+		Real64 f_VPD;
+		Real64 f_HumVar;
+
+		VPD_plants = e_s(Temperature) - eair;
+		if (VPD_plants > 0.0) {
+			f_VPD = 1.0 - 0.41*log(VPD_plants);
+		}
+		else {
+			f_VPD = 1.0;
+		}
+		if (f_VPD > 1.0) {
+			f_VPD = 1.0;
+		}
+		if (f_VPD < 0.0) {
+			f_VPD = 0.05;
+		}
+		f_HumVar = 1.0 / f_VPD;
+		return f_HumVar;
+	}
+
+	// f_temp
+	Real64
+	f_temp(
+		Real64 const Temperature
+	)
+	{
+		Real64 f_tempVar;
+
+		f_tempVar = abs(1 / (1 - 0.0016*pow((35 - (Temperature - KelvinConv)), 2)));
+		return f_tempVar;
+	}
+
+
+	// Gamma: Psychrometric constant
+	Real64
+		gamma_s(
+			Real64 const Temperature,
+			Real64 const Cp_air,
+			Real64 const Pa
+		)
+	{
+		Real64 i_fg;
+		Real64 gamma_sVar;
+
+		i_fg = (-2.3793*(Temperature - KelvinConv) + 2501.1) * 1000;  // Latent heat of vaporization(j / kg); 1000 is
+		// for converting kj to j.
+		gamma_sVar = Cp_air*(Pa / 1000) / (0.622*i_fg);
+
+		return gamma_sVar;
 	}
 
 	void
