@@ -312,7 +312,7 @@ namespace DataHeatBalance {
 	Real64 const HighDiffusivityThreshold( 1.e-5 ); // used to check if Material properties are out of line.
 	Real64 const ThinMaterialLayerThreshold( 0.003 ); // 3 mm lower limit to expected material layers
 
-	GreenRoofModel_PC = false;
+	bool GreenRoofModel_PC(false);
 
 	// DERIVED TYPE DEFINITIONS:
 
