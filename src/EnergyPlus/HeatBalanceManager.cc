@@ -3465,6 +3465,27 @@ namespace HeatBalanceManager {
 			Material( MaterNum ).MinMoisture = MaterialProps( 14 );
 			Material( MaterNum ).InitMoisture = MaterialProps( 15 );
 
+
+			// ***-- - PlantCoverage, VWC_FieldCapacity, SW_ExtCoeff, and LW_ExtCoeff are added for
+				// ***-- - the GreenRoof_with_PlantCoverage model(Neda Yaghoobian 2014)
+			if (SameString(MaterialNames(5), "EcoRoof")) {
+				GreenRoofModel_PC = false;
+			}
+			else if (SameString(MaterialNames(5), "GreenRoof_with_PlantCoverage")) {
+				GreenRoofModel_PC = true;
+			}
+			else {
+				ShowContinueError(trim(cAlphaFieldNames(5)) + "='" + trim(MaterialNames(5)) + "'.");
+				ShowContinueError("...Valid values are 'EcoRoof' or 'GreenRoof_with_PlantCoverage'.");
+				ErrorsFound = true;
+			}
+			Material(MaterNum).PlantCoverage = MaterialProps(16); // Plant coverage
+			Material(MaterNum).VWC_FieldCapacity = MaterialProps(17);  // VWC at field capacity
+			Material(MaterNum).SW_ExtCoeff = MaterialProps(18);  // SW extinction coefficient
+			Material(MaterNum).LW_ExtCoeff = MaterialProps(19);  // LW extinction coefficient
+
+
+
 			if ( Material( MaterNum ).Conductivity > 0.0 ) {
 				NominalR( MaterNum ) = Material( MaterNum ).Thickness / Material( MaterNum ).Conductivity;
 				Material( MaterNum ).Resistance = NominalR( MaterNum );
