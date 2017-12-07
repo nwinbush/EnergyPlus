@@ -4788,12 +4788,37 @@ Material:RoofVegetation,
       \minimum> 0.05
       \maximum  0.5
       \default 0.1
-  A4; \field Moisture Diffusion Calculation Method
+  A4, \field Moisture Diffusion Calculation Method
       \note Advanced calculation requires increased number of timesteps (recommended >20).
       \type choice
       \key Simple
       \key Advanced
       \default Advanced
+  A5, \field EcoRoof or GreenRoof
+      \note Determines whether the EcoRoof or GreenRoof model is used
+      \type choice
+      \key EcoRoof
+      \key GreenRoof_with_PlantCoverage
+      \default EcoRoof
+  N16,\field Plant coverage
+      \note GreenRoof plant coverage as a fraction of the roof area
+      \type real
+      \minimum 0.0
+      \maximum 1.0
+      \default 0.5
+  N17,\field Volumetric Water Content at Field Capacity
+      \note The default value of 0.33 m^3/m^3 is from the Yaghoobian paper.
+      \type real
+      \minimum 0.0
+      \maximum 1.0
+      \default 0.33
+  N18,\field SW extinction coefficient
+      \note
+      \type real
+      \default 0.7
+  N19;\field LW extinction coefficient
+      \note
+      \default 0.83
 
 WindowMaterial:SimpleGlazingSystem,
        \min-fields 3
