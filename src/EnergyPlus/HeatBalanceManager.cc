@@ -3470,9 +3470,11 @@ namespace HeatBalanceManager {
 				// ***-- - the GreenRoof_with_PlantCoverage model(Neda Yaghoobian 2014)
 			if (SameString(MaterialNames(5), "EcoRoof")) {
 				GreenRoofModel_PC = false;
+				//std::cout << std::endl << "EcoRoof Selected: " << GreenRoofModel_PC << std::endl;
 			}
 			else if (SameString(MaterialNames(5), "GreenRoof_with_PlantCoverage")) {
 				GreenRoofModel_PC = true;
+				//std::cout << std::endl << "GreenRoof_with_PlantCoverage Selected: " << GreenRoofModel_PC << std::endl;
 			}
 			else {
 				ShowContinueError(trim(cAlphaFieldNames(5)) + "='" + trim(MaterialNames(5)) + "'.");

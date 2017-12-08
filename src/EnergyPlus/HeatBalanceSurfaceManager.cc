@@ -4949,7 +4949,7 @@ CalcHeatBalanceOutsideSurf( Optional_int_const ZoneToResimulate ) // if passed i
 			// recompute each load by calling ecoroof
 
 			if ( Surface( SurfNum ).ExtEcoRoof ) {
-				if (GreenRoofModel_PC) {
+				if (GreenRoofModel_PC ) {
 					GreenRoof_with_PlantCoverage(SurfNum, ZoneNum, ConstrNum, TempExt);
 				}
 				else {

@@ -832,6 +832,7 @@ namespace EcoRoofManager {
 		Real64 Func_MidPoint;
 		Real64 Func_1, Func_2, Sol_1, Sol_2;
 
+
 		// FLOW:
 
 		if (SurfaceWindow(SurfNum).StormWinFlag == 1)
@@ -841,7 +842,7 @@ namespace EcoRoofManager {
 		HMovInsul = 0.0;
 
 		if (Surface(SurfNum).ExtWind) {
-			InitExteriorConvectionCoeff(SurfNum, HMovInsul, RoughSurf, AbsThermSurf, TH(SurfNum, 1, 1),
+			InitExteriorConvectionCoeff(SurfNum, HMovInsul, RoughSurf, AbsThermSurf, TH(1,1,SurfNum),
 				HcExtSurf(SurfNum), HSkyExtSurf(SurfNum), HGrdExtSurf(SurfNum), HAirExtSurf(SurfNum));
 		}
 
@@ -868,11 +869,11 @@ namespace EcoRoofManager {
 			MeanRootMoisture = Moisture; // DJS Oct 2007 Release--> all soil at same initial moisture for Reverse DD fix
 			SoilThickness = Material(Construct(ConstrNum).LayerPoint(1)).Thickness; // Total thickness of soil layer(m)
 
-			/*sigma_f = Material(Construct(ConstrNum).LayerPoint(1)).PlantCoverage;
+			sigma_f = Material(Construct(ConstrNum).LayerPoint(1)).PlantCoverage;
 			VWC_fc = Material(Construct(ConstrNum).LayerPoint(1)).VWC_FieldCapacity;
 			VWC_wp = MoistureResidual;
 			Ksw = Material(Construct(ConstrNum).LayerPoint(1)).SW_ExtCoeff;
-			Klw = Material(Construct(ConstrNum).LayerPoint(1)).LW_ExtCoeff;*/
+			Klw = Material(Construct(ConstrNum).LayerPoint(1)).LW_ExtCoeff;
 
 
 			FirstEcoSurf = SurfNum;          // this determines WHEN to updatesoilProps
@@ -1341,7 +1342,7 @@ namespace EcoRoofManager {
 			// ###############################################
 
 			TempExt = Tsoil_avg - KelvinConv;
-			TH(SurfNum, 1, 1) = Tsoil_avg - KelvinConv;
+			TH( 1, 1, SurfNum) = Tsoil_avg - KelvinConv;
 
 			Tsoil_avg_Rep = Tsoil_avg - KelvinConv;
 			Qconv_s_avg_Rep = sigma_f*Qconv_s_Rep + (1 - sigma_f)*Qconv_bare_s_Rep;
